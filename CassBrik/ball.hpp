@@ -5,7 +5,8 @@
 class Ball : public GameObject
 {
 public:
-	Ball() : GameObject(310.f, 440.f, 40) {};
+	Ball() : GameObject(310.f, 470.f, 10) {};
+	void update(sf::Time deltaTime);
 
 private:
 
