@@ -1,13 +1,16 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #include "canon.hpp"
+#include "ball.hpp"
 
 int main(int argc, char** argv)
 {
     //Création d'une fenêtre
     sf::RenderWindow oWindow(sf::VideoMode(640, 480), "Le Kas Brik");
 
-    Canon tCircle(40, 80, 300, 400);
+    Canon canon;
+    Ball ball;
 
     //GameLoop
     while (oWindow.isOpen())
@@ -25,7 +28,8 @@ int main(int argc, char** argv)
         //DRAW
         oWindow.clear();
 
-        oWindow.draw(*tCircle.getShape());
+        oWindow.draw(*canon.getShape());
+        oWindow.draw(*ball.getShape());
 
         oWindow.display();
     }

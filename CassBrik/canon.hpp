@@ -5,7 +5,7 @@
 class Canon : public GameObject
 {
 public:
-	Canon();
+	Canon() : GameObject(310.f, 440.f, 20, 40) {};
 
 private:
 
