@@ -12,9 +12,10 @@ public:
 
 protected:
 	float pos[2] = { 0 };
-	float vect[2] = { 0 };
+	sf::Vector2f vect;
 	float velocity = 0;
 	int size[2] = { 0 };
+	sf::Shape* initialShape = NULL;
 	sf::Shape* shape = NULL;
 
 };

@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
 
 #include "canon.hpp"
 #include "ball.hpp"
@@ -14,7 +15,7 @@ int main(int argc, char** argv)
     sf::Clock clock;
 
     Canon canon;
-    Ball ball;
+    std::vector<Ball*> listBall;
 
     //GameLoop
     while (oWindow.isOpen())
@@ -25,18 +26,24 @@ int main(int argc, char** argv)
         {
             if (oEvent.type == sf::Event::Closed)
                 oWindow.close();
+            switch (oEvent.type) 
+            {
+            case 9:
+                listBall.push_back(new Ball(&oWindow));
+                break;
+            default:
+                break;
+            }
         }
 
         //UPDATE
         sf::Time deltaTime = clock.restart();
-        ball.update(deltaTime);
-        canon.update(deltaTime);
+        canon.update(deltaTime, &oWindow);
 
         //DRAW
         oWindow.clear();
 
         oWindow.draw(*canon.getShape());
-        oWindow.draw(*ball.getShape());
 
         oWindow.display();
 
