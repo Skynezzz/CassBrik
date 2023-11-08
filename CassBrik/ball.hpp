@@ -6,7 +6,8 @@ class Ball : public GameObject
 {
 public:
 	Ball(sf::RenderWindow* window);
-	void update(sf::Time deltaTime);
+	int update(sf::Time deltaTime, sf::RenderWindow* window) override;
+	void move(sf::Time deltaTime, sf::RenderWindow* window);
 
 private:
 

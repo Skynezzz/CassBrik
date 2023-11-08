@@ -2,13 +2,14 @@
 
 #include "gameObject.hpp"
 
-class Canon : public GameObject
+class Tiles : public GameObject
 {
 public:
-	Canon() : GameObject(320.f, 480.f, 20, 40) { shape->setOrigin(10, 40); };
+	Tiles(float posX, float posY, int pLife);
 	int update(sf::Time deltaTime, sf::RenderWindow* window) override;
+	inline void getDamage() { life--; }
 
 private:
-	float initAngle = 0;
+	int life;
 
 };

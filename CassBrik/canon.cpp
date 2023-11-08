@@ -1,13 +1,13 @@
 #include "canon.hpp"
 #include <iostream>
 
-void Canon::update(sf::Time deltaTime, sf::RenderWindow* window)
+int Canon::update(sf::Time deltaTime, sf::RenderWindow* window)
 {
 	sf::Vector2i mouse = sf::Mouse::getPosition(*window);
 	sf::Vector2f baseCanon = shape->getPosition();
 
-	if (window->getSize().x < mouse.x and mouse.x < 0 and 0 > mouse.y and mouse.y > window->getSize().y)
-		return;
+	if (window->getSize().x < mouse.x or mouse.x < 0 or 0 > mouse.y or mouse.y > window->getSize().y)
+		return 0;
 
 	float opp = mouse.x - baseCanon.x;
 	float adj = mouse.y - baseCanon.y;
@@ -15,4 +15,6 @@ void Canon::update(sf::Time deltaTime, sf::RenderWindow* window)
 
 	shape->rotate(angle - initAngle);
 	initAngle = angle;
+
+	return 0;
 }

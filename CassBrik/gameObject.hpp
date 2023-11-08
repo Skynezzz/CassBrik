@@ -8,14 +8,18 @@ public:
 	GameObject(float pPos1, float pPos2, int pSize1, int pSize2);
 	GameObject(float pPos1, float pPos2, int pSize1);
 	inline sf::Shape* getShape() { return shape; };
-	void move(sf::Time deltaTime);
+	virtual int update(sf::Time deltaTime, sf::RenderWindow* window) { return 0; };
+	bool isColliding(GameObject* object);
 
 protected:
-	float pos[2] = { 0 };
+	sf::Vector2f position;
 	sf::Vector2f vect;
+	sf::Vector2f size;
 	float velocity = 0;
-	int size[2] = { 0 };
 	sf::Shape* initialShape = NULL;
 	sf::Shape* shape = NULL;
+
+	float getVectorLenth(sf::Vector2f vector);
+	bool isCollidingOneD(sf::Vector2f object1, sf::Vector2f object2);
 
 };
