@@ -142,6 +142,7 @@
     <ClInclude Include="canon.hpp" />
     <ClInclude Include="game.hpp" />
     <ClInclude Include="gameObject.hpp" />
+    <ClInclude Include="test.hpp" />
     <ClInclude Include="tiles.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

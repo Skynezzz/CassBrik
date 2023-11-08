@@ -20,7 +20,7 @@ int main(int argc, char** argv)
     Canon canon;
     std::vector<Ball*> listBall;
     std::vector<Tiles*> listTiles;
-    listTiles.push_back(new Tiles(1, 1, 3));
+    listTiles.push_back(new Tiles(7, 5, 3));
 
     //GameLoop
     while (oWindow.isOpen())
@@ -77,6 +77,7 @@ int main(int argc, char** argv)
         }
 
         for (int i = 0; i < listBall.size(); i++) {
+            //oWindow.draw(*listBall[i]->getHitbox());
             oWindow.draw(*listBall[i]->getShape());
         }
         oWindow.draw(*canon.getShape());

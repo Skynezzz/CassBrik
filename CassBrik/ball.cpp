@@ -1,10 +1,8 @@
 #include "ball.hpp"
 #include <iostream>
 
-Ball::Ball(sf::RenderWindow* window) : GameObject(320.f, 480.f, 10)
+Ball::Ball(sf::RenderWindow* window) : GameObject(320.f, 480.f, 20)
 {
-	shape->setOrigin(10, 10);
-
 	sf::Vector2f direction;
 	direction.x = sf::Mouse::getPosition(*window).x - shape->getPosition().x;
 	direction.y = (sf::Mouse::getPosition(*window).y - shape->getPosition().y);
@@ -52,10 +50,10 @@ void Ball::move(sf::Time deltaTime, sf::RenderWindow* window)
 		position.x = nextPosition.x;
 	}
 
-	if (nextPosition.y < 0) {
+	if (nextPosition.y - size.y < 0) {
 		add.y = -add.y;
-		float yOut = position.y;
-		position.y = add.y - 2 * yOut;
+		float yOut = position.y - size.y;
+		position.y = size.y + add.y - 2 * yOut;
 		vect.y = -vect.y;
 	}
 	else {
