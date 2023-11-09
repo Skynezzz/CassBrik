@@ -19,14 +19,15 @@ int main(int argc, char** argv)
     // Faire un vecteur de GameObject* pour update en boucle les elements des 3 vect et draw en boucle aussi
     Canon canon;
     std::vector<Ball*> listBall;
+    Ball ball(&oWindow);
     std::vector<Tiles*> listTiles;
     listTiles.push_back(new Tiles(7, 5, 3));
 
+    sf::Event oEvent;
     //GameLoop
     while (oWindow.isOpen())
     {
         //EVENT
-        sf::Event oEvent;
         while (oWindow.pollEvent(oEvent))
         {
             if (oEvent.type == sf::Event::Closed)
@@ -56,9 +57,13 @@ int main(int argc, char** argv)
             }
         }
 
+        ball.oSetPosition(sf::Mouse::getPosition(oWindow).x, sf::Mouse::getPosition(oWindow).y);
+        ball.checkBounce(listTiles[0]);
+
         for (auto it = listBall.begin(); it != listBall.end();) {
 
-            std::cout << (*it)->isColliding(listTiles[0]) << std::endl;
+            //std::cout << (*it)->isColliding(listTiles[0]) << std::endl;
+            (*it)->checkBounce(listTiles[0]);
 
             if ((*it)->update(deltaTime, &oWindow) == 1) {
                 delete* it;
@@ -76,9 +81,14 @@ int main(int argc, char** argv)
             oWindow.draw(*listTiles[i]->getShape());
         }
 
+
+
+        oWindow.draw(*ball.getShape());
+        oWindow.draw(*ball.getHitbox());
+         
         for (int i = 0; i < listBall.size(); i++) {
-            //oWindow.draw(*listBall[i]->getHitbox());
             oWindow.draw(*listBall[i]->getShape());
+            oWindow.draw(*listBall[i]->getHitbox());
         }
         oWindow.draw(*canon.getShape());
 

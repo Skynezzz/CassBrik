@@ -61,4 +61,16 @@ void Ball::move(sf::Time deltaTime, sf::RenderWindow* window)
 	}
 
 	shape->setPosition(position.x, position.y);
+
+	hitbox->setPosition(position.x, position.y);
+}
+
+void Ball::oSetPosition(float x, float y) {
+	position.x = x;
+	position.y = y;
+
+	shape->setPosition(position.x, position.y);
+
+	hitbox->setPosition(position.x, position.y);
+
 }

@@ -15,9 +15,9 @@ public:
 	sf::Vector2f getMinMaxY();
 	void checkBounce(GameObject* incomingObject);
 	bool isColliding(GameObject* object);
+	sf::Vector2f position;
 
 protected:
-	sf::Vector2f position;
 	sf::Vector2f vect;
 	sf::Vector2f size;
 	float velocity = 0;

@@ -66,8 +66,6 @@ bool GameObject::isColliding(GameObject* incomingObject)
 {
 	bool collideX = isCollidingOneD(incomingObject->getMinMaxX(), getMinMaxX());
 
-	hitbox->setPosition(position.x, position.y);
-
 	bool collideY = isCollidingOneD(incomingObject->getMinMaxY(), getMinMaxY());
 
 	return (collideX and collideY);
@@ -76,12 +74,42 @@ bool GameObject::isColliding(GameObject* incomingObject)
 sf::Vector2f GameObject::getBounceDirection(GameObject* incomingObject)
 {
 	sf::Vector2f returnVect;
+	returnVect.x = -1;
+	returnVect.y = -1;
+
+	float left = abs(getMinMaxX().y - incomingObject->getMinMaxX().x);
+	float right = abs(getMinMaxX().x - incomingObject->getMinMaxX().y);
+	float up = abs(getMinMaxY().y - incomingObject->getMinMaxY().x);
+	float down = abs(getMinMaxY().x - incomingObject->getMinMaxY().y);
+	float xMin = left;
+	float yMin = up;
+
+	if (left > right) {
+		xMin = right;
+	}
+	if (up > down) {
+		yMin = down;
+	}
+	if (xMin > yMin) {
+		returnVect.x = 0;
+	}
+	else {
+		returnVect.y = 0;
+	}
 
 	return returnVect;
 }
 
 void GameObject::bounce(sf::Vector2f direction)
 {
+
+	std::cout << "X : " << direction.x << std::endl << "Y : " << direction.y << std::endl;
+
+	if (direction.x != 0) {
+		vect.x *= direction.x;
+		return;
+	}
+	vect.y *= direction.y;
 }
 
 void GameObject::checkBounce(GameObject* incomingObject)
