@@ -35,6 +35,15 @@ GameObject::GameObject(float pPos1, float pPos2, int pSize1)
 	hitbox->setFillColor(sf::Color::Green);
 }
 
+
+// Position //
+
+void GameObject::move(sf::Time deltaTime)
+{
+	position.x += vect.x * velocity * deltaTime.asSeconds();
+	position.y += vect.y * velocity * deltaTime.asSeconds();
+}
+
 sf::Vector2f GameObject::getMinMaxX() {
 	sf::Vector2f returnVect;
 	returnVect.x = position.x - size.x / 2;
@@ -49,9 +58,24 @@ sf::Vector2f GameObject::getMinMaxY() {
 	return returnVect;
 }
 
+
+// Vector //
+
 float GameObject::getVectorLenth(sf::Vector2f vector)
 {
 	return sqrt(pow(vector.x, 2) + pow(vector.y, 2));
+}
+
+
+// Collides //
+
+bool GameObject::isColliding(GameObject* incomingObject)
+{
+	bool collideX = isCollidingOneD(incomingObject->getMinMaxX(), getMinMaxX());
+
+	bool collideY = isCollidingOneD(incomingObject->getMinMaxY(), getMinMaxY());
+
+	return (collideX and collideY);
 }
 
 bool GameObject::isCollidingOneD(sf::Vector2f objectOne, sf::Vector2f objectTwo)
@@ -62,13 +86,26 @@ bool GameObject::isCollidingOneD(sf::Vector2f objectOne, sf::Vector2f objectTwo)
 	return ((objectOne.x >= objectTwo.x and objectOne.x <= objectTwo.y) or (objectOne.y >= objectTwo.x and objectOne.y <= objectTwo.y));
 }
 
-bool GameObject::isColliding(GameObject* incomingObject)
+
+// Bounce //
+
+void GameObject::checkBounce(GameObject* incomingObject)
 {
-	bool collideX = isCollidingOneD(incomingObject->getMinMaxX(), getMinMaxX());
+	if (!isColliding(incomingObject))
+		return;
 
-	bool collideY = isCollidingOneD(incomingObject->getMinMaxY(), getMinMaxY());
+	bounce(getBounceDirection(incomingObject));
+}
 
-	return (collideX and collideY);
+void GameObject::bounce(sf::Vector2f direction)
+{
+	std::cout << "X : " << direction.x << std::endl << "Y : " << direction.y << std::endl;
+
+	if (direction.x != 0) {
+		vect.x = -vect.x;
+		return;
+	}
+	vect.y = -vect.y;
 }
 
 sf::Vector2f GameObject::getBounceDirection(GameObject* incomingObject)
@@ -86,9 +123,11 @@ sf::Vector2f GameObject::getBounceDirection(GameObject* incomingObject)
 
 	if (left > right) {
 		xMin = right;
+		returnVect.x = 1;
 	}
 	if (up > down) {
 		yMin = down;
+		returnVect.y = 1;
 	}
 	if (xMin > yMin) {
 		returnVect.x = 0;
@@ -98,24 +137,4 @@ sf::Vector2f GameObject::getBounceDirection(GameObject* incomingObject)
 	}
 
 	return returnVect;
-}
-
-void GameObject::bounce(sf::Vector2f direction)
-{
-
-	std::cout << "X : " << direction.x << std::endl << "Y : " << direction.y << std::endl;
-
-	if (direction.x != 0) {
-		vect.x *= direction.x;
-		return;
-	}
-	vect.y *= direction.y;
-}
-
-void GameObject::checkBounce(GameObject* incomingObject)
-{
-	if (!isColliding(incomingObject))
-		return;
-
-	bounce(getBounceDirection(incomingObject));
 }

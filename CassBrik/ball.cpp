@@ -15,7 +15,8 @@ Ball::Ball(sf::RenderWindow* window) : GameObject(320.f, 480.f, 20)
 int Ball::update(sf::Time deltaTime, sf::RenderWindow* window)
 {
 	move(deltaTime, window);
-	//std::cout << shape->getPosition().x << " / " << shape->getPosition().y << std::endl;
+
+	windowBorderProtection(window);
 
 	if (position.y > window->getSize().y)
 		return 1;
