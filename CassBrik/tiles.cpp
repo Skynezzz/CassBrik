@@ -5,10 +5,10 @@ Tiles::Tiles(float posX, float posY, int pLife) : GameObject(40*posX, 20*posY, 4
 	life = pLife;
 }
 
-int Tiles::update(sf::Time deltaTime, sf::RenderWindow* window)
+bool Tiles::update(sf::Time deltaTime, sf::RenderWindow* window)
 {
 	if (life <= 0)
-		return 1;
+		return true;
 
-	return 0;
+	return false;
 }

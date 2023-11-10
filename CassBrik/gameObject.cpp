@@ -68,68 +68,16 @@ float GameObject::getVectorLenth(sf::Vector2f vector)
 	return sqrt(pow(vector.x, 2) + pow(vector.y, 2));
 }
 
-int GameObject::windowBorderProtection(sf::Time deltaTime, sf::RenderWindow* window)
-{
-
-	sf::Vector2f nextPosition;
-	nextPosition.x = position.x + vect.x * velocity * deltaTime.asSeconds();
-	nextPosition.y = position.y + vect.y * velocity * deltaTime.asSeconds();
-	
-	sf::Vector2f add;
-	add.x = vect.x * velocity * deltaTime.asSeconds();
-	add.y = vect.y * velocity * deltaTime.asSeconds();
-	
-	if (nextPosition.x - size.x < 0) {
-		add.x = -add.x;
-		float xOut = position.x - size.x;
-		position.x = size.x + add.x - 2 * xOut;
-		vect.x = -vect.x;
-		std::cout << vect.x << std::endl;
-	}
-	else if (nextPosition.x + size.x > window->getSize().x) {
-		add.x = -add.x;
-		float xOut = window->getSize().x - (position.x + size.x);
-		position.x = window->getSize().x - size.x + (add.x + 2 * xOut);
-		vect.x = -vect.x;
-	}
-	else {
-		position.x = nextPosition.x;
-	}
-	
-	if (nextPosition.y - size.y < 0) {
-		add.y = -add.y;
-		float yOut = position.y - size.y;
-		position.y = size.y + add.y - 2 * yOut;
-		vect.y = -vect.y;
-	}
-	else {
-		position.y = nextPosition.y;
-	}
-	
-	shape->setPosition(position.x, position.y);
-	return 0;
-	/////////////////////////////////////
-	sf::Vector2f bounceDirection;
-
-	if (getMinMaxX().x < 0)
-		bounceDirection.x = 1;
-
-	else if (getMinMaxX().y > window->getSize().x)
-		bounceDirection.x = -1;
-
-	if (getMinMaxY().x < 0)
-		bounceDirection.y = 1;
-	
-	else if (getMinMaxY().x > window->getSize().y)
-		return 1;
-
-	bounce(bounceDirection);
-
-	return 0;
-}
-
 
 // Collides //
+
+bool GameObject::isOutScreen(sf::RenderWindow* window)
+{
+	if (getMinMaxX().x < 0 or getMinMaxX().y > window->getSize().x or getMinMaxY().x < 0)
+		return true;
+
+	return false;
+}
 
 bool GameObject::isColliding(GameObject* incomingObject)
 {
@@ -151,12 +99,13 @@ bool GameObject::isCollidingOneD(sf::Vector2f objectOne, sf::Vector2f objectTwo)
 
 // Bounce //
 
-void GameObject::checkBounce(GameObject* incomingObject)
+void GameObject::checkBounce(GameObject* incomingObject, sf::RenderWindow* window)
 {
-	if (!isColliding(incomingObject))
-		return;
+	if (isOutScreen(window))
+		bounce(getWindowBorderBounceDirection());
 
-	bounce(getBounceDirection(incomingObject));
+	if (isColliding(incomingObject))
+		bounce(getBounceDirection(incomingObject));
 }
 
 void GameObject::bounce(sf::Vector2f direction)
@@ -199,4 +148,20 @@ sf::Vector2f GameObject::getBounceDirection(GameObject* incomingObject)
 	}
 
 	return returnVect;
+}
+
+sf::Vector2f GameObject::getWindowBorderBounceDirection(sf::Time deltaTime, sf::RenderWindow* window)
+{
+	sf::Vector2f bounceDirection;
+
+	if (getMinMaxX().x < 0)
+		bounceDirection.x = 1;
+
+	else if (getMinMaxX().y > window->getSize().x)
+		bounceDirection.x = -1;
+
+	if (getMinMaxY().x < 0)
+		bounceDirection.y = 1;
+
+	return bounceDirection;
 }

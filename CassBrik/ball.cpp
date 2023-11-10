@@ -12,11 +12,16 @@ Ball::Ball(sf::RenderWindow* window) : GameObject(320.f, 480.f, 20)
 	std::cout << vect.x << " / " << vect.y << std::endl;
 }
 
-int Ball::update(sf::Time deltaTime, sf::RenderWindow* window)
+bool Ball::update(sf::Time deltaTime, sf::RenderWindow* window)
 {
 	move(deltaTime);
-	std::cout << "ici : " << vect.x << " / " << vect.y << std::endl;
-	return windowBorderProtection(window);
+
+	return isUnderScreen(window);
+}
+
+bool Ball::isUnderScreen(sf::RenderWindow* window)
+{
+	return getMinMaxY().y > window->getSize().y;
 }
 
 //void Ball::move(sf::Time deltaTime, sf::RenderWindow* window)
@@ -61,12 +66,12 @@ int Ball::update(sf::Time deltaTime, sf::RenderWindow* window)
 //	hitbox->setPosition(position.x, position.y);
 //}
 
-void Ball::oSetPosition(float x, float y) {
+void Ball::oSetPosition(float x, float y)
+{
 	position.x = x;
 	position.y = y;
 
 	shape->setPosition(position.x, position.y);
 
 	hitbox->setPosition(position.x, position.y);
-
 }
