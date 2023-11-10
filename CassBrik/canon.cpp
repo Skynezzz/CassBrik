@@ -11,9 +11,12 @@ int Canon::update(sf::Time deltaTime, sf::RenderWindow* window)
 
 	float opp = mouse.x - baseCanon.x;
 	float adj = mouse.y - baseCanon.y;
-	float angle = - atan(opp / adj) * 180 / 3.14;
 
-	shape->rotate(angle - initAngle);
+	//std::cout << atan2(opp, adj) * 180 / 3.14 << std::endl;
+
+	float angle = -atan(opp / adj) * 180 / 3.14;
+
+	shape->setRotation(angle);
 	initAngle = angle;
 
 	return 0;

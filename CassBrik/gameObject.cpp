@@ -42,6 +42,8 @@ void GameObject::move(sf::Time deltaTime)
 {
 	position.x += vect.x * velocity * deltaTime.asSeconds();
 	position.y += vect.y * velocity * deltaTime.asSeconds();
+
+	shape->setPosition(position.x, position.y);
 }
 
 sf::Vector2f GameObject::getMinMaxX() {
@@ -64,6 +66,66 @@ sf::Vector2f GameObject::getMinMaxY() {
 float GameObject::getVectorLenth(sf::Vector2f vector)
 {
 	return sqrt(pow(vector.x, 2) + pow(vector.y, 2));
+}
+
+int GameObject::windowBorderProtection(sf::Time deltaTime, sf::RenderWindow* window)
+{
+
+	sf::Vector2f nextPosition;
+	nextPosition.x = position.x + vect.x * velocity * deltaTime.asSeconds();
+	nextPosition.y = position.y + vect.y * velocity * deltaTime.asSeconds();
+	
+	sf::Vector2f add;
+	add.x = vect.x * velocity * deltaTime.asSeconds();
+	add.y = vect.y * velocity * deltaTime.asSeconds();
+	
+	if (nextPosition.x - size.x < 0) {
+		add.x = -add.x;
+		float xOut = position.x - size.x;
+		position.x = size.x + add.x - 2 * xOut;
+		vect.x = -vect.x;
+		std::cout << vect.x << std::endl;
+	}
+	else if (nextPosition.x + size.x > window->getSize().x) {
+		add.x = -add.x;
+		float xOut = window->getSize().x - (position.x + size.x);
+		position.x = window->getSize().x - size.x + (add.x + 2 * xOut);
+		vect.x = -vect.x;
+	}
+	else {
+		position.x = nextPosition.x;
+	}
+	
+	if (nextPosition.y - size.y < 0) {
+		add.y = -add.y;
+		float yOut = position.y - size.y;
+		position.y = size.y + add.y - 2 * yOut;
+		vect.y = -vect.y;
+	}
+	else {
+		position.y = nextPosition.y;
+	}
+	
+	shape->setPosition(position.x, position.y);
+	return 0;
+	/////////////////////////////////////
+	sf::Vector2f bounceDirection;
+
+	if (getMinMaxX().x < 0)
+		bounceDirection.x = 1;
+
+	else if (getMinMaxX().y > window->getSize().x)
+		bounceDirection.x = -1;
+
+	if (getMinMaxY().x < 0)
+		bounceDirection.y = 1;
+	
+	else if (getMinMaxY().x > window->getSize().y)
+		return 1;
+
+	bounce(bounceDirection);
+
+	return 0;
 }
 
 
@@ -101,11 +163,11 @@ void GameObject::bounce(sf::Vector2f direction)
 {
 	std::cout << "X : " << direction.x << std::endl << "Y : " << direction.y << std::endl;
 
-	if (direction.x != 0) {
+	if (direction.x != 0)
 		vect.x = -vect.x;
-		return;
-	}
-	vect.y = -vect.y;
+	else if (direction.y != 0)
+		vect.y = -vect.y;
+	return;
 }
 
 sf::Vector2f GameObject::getBounceDirection(GameObject* incomingObject)

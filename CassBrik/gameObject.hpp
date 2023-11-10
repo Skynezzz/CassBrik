@@ -33,6 +33,7 @@ protected:
 	sf::Shape* hitbox = NULL;
 
 	float getVectorLenth(sf::Vector2f vector);
+	int windowBorderProtection(sf::Time deltaTime, sf::RenderWindow* window);
 	bool isColliding(GameObject* object);
 	bool isCollidingOneD(sf::Vector2f object1, sf::Vector2f object2);
 	sf::Vector2f getBounceDirection(GameObject* incomingObject);
