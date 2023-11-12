@@ -5,7 +5,7 @@ Ball::Ball(sf::RenderWindow* window) : GameObject(320.f, 480.f, 20)
 {
 	sf::Vector2f direction;
 	direction.x = sf::Mouse::getPosition(*window).x - shape->getPosition().x;
-	direction.y = (sf::Mouse::getPosition(*window).y - shape->getPosition().y);
+	direction.y = sf::Mouse::getPosition(*window).y - shape->getPosition().y;
 	float norme = getVectorLenth(direction);
 	vect.x = direction.x / norme;
 	vect.y = direction.y / norme;
@@ -21,7 +21,7 @@ bool Ball::update(sf::Time deltaTime, sf::RenderWindow* window)
 
 bool Ball::isUnderScreen(sf::RenderWindow* window)
 {
-	return getMinMaxY().y > window->getSize().y;
+	return getMinMaxY().x > window->getSize().y;
 }
 
 //void Ball::move(sf::Time deltaTime, sf::RenderWindow* window)

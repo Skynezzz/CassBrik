@@ -32,7 +32,7 @@ protected:
 	sf::Shape* hitbox;
 
 	float getVectorLenth(sf::Vector2f vector);
-	sf::Vector2f getWindowBorderBounceDirection(sf::Time deltaTime, sf::RenderWindow* window);
+	sf::Vector2f getWindowBorderBounceDirection(sf::RenderWindow* window);
 	bool isOutScreen(sf::RenderWindow* window);
 	bool isColliding(GameObject* object);
 	bool isCollidingOneD(sf::Vector2f object1, sf::Vector2f object2);

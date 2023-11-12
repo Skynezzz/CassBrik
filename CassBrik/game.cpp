@@ -71,7 +71,7 @@ void Game::update()
     //--- BALLS ---//
     for (auto it = listBall.begin(); it != listBall.end();)
     {
-        (*it)->checkBounce(listTiles[0]);
+        (*it)->checkBounce(listTiles[0], oWindow);
 
         if ((*it)->update(deltaTime, oWindow) == 1)
         {

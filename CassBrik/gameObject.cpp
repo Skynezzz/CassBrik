@@ -102,10 +102,13 @@ bool GameObject::isCollidingOneD(sf::Vector2f objectOne, sf::Vector2f objectTwo)
 void GameObject::checkBounce(GameObject* incomingObject, sf::RenderWindow* window)
 {
 	if (isOutScreen(window))
-		bounce(getWindowBorderBounceDirection());
+		bounce(getWindowBorderBounceDirection(window));
 
 	if (isColliding(incomingObject))
+	{
 		bounce(getBounceDirection(incomingObject));
+		incomingObject.getDamage();
+	}
 }
 
 void GameObject::bounce(sf::Vector2f direction)
@@ -150,7 +153,7 @@ sf::Vector2f GameObject::getBounceDirection(GameObject* incomingObject)
 	return returnVect;
 }
 
-sf::Vector2f GameObject::getWindowBorderBounceDirection(sf::Time deltaTime, sf::RenderWindow* window)
+sf::Vector2f GameObject::getWindowBorderBounceDirection(sf::RenderWindow* window)
 {
 	sf::Vector2f bounceDirection;
 
