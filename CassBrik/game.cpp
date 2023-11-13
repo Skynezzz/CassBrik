@@ -4,7 +4,14 @@ Game::Game()
 {
     oWindow = new sf::RenderWindow(sf::VideoMode(640, 480), "Le Kas Brik");
 
-    listTiles.push_back(new Tiles(7, 5, 3));
+    listTiles.push_back(new Tiles(1, 3, 5));
+    listTiles.push_back(new Tiles(2, 3, 5));
+    listTiles.push_back(new Tiles(3, 3, 5));
+    listTiles.push_back(new Tiles(4, 3, 5));
+    listTiles.push_back(new Tiles(5, 3, 5));
+    listTiles.push_back(new Tiles(6, 3, 5));
+    listTiles.push_back(new Tiles(7, 3, 5));
+    listTiles.push_back(new Tiles(8, 3, 100));
 }
 
 Game::~Game()
@@ -54,35 +61,39 @@ void Game::update()
     //--- CANON ---//
     canon.update(deltaTime, oWindow);
 
-    //--- TILES ---//
-    for (auto it = listTiles.begin(); it != listTiles.end();)
+    
+    for (auto itBall = listBall.begin(); itBall != listBall.end();)
     {
-        if ((*it)->update(deltaTime, oWindow) == 1)
+        for (auto itTile = listTiles.begin(); itTile != listTiles.end();)
         {
-            delete* it;
-            it = listTiles.erase(it);
+            (*itBall)->checkBounce(*itTile);
+
+    //--- TILES ---//
+            if ((*itTile)->update(deltaTime, oWindow) == 1)
+            {
+                delete* itTile;
+                itTile = listTiles.erase(itTile);
+            }
+            else
+            {
+                ++itTile;
+            }
         }
-        else
-        {
-            ++it;
-        }
-    }
 
     //--- BALLS ---//
-    for (auto it = listBall.begin(); it != listBall.end();)
-    {
-        (*it)->checkBounce(listTiles[0], oWindow);
-
-        if ((*it)->update(deltaTime, oWindow) == 1)
+        if ((*itBall)->update(deltaTime, oWindow) == 1)
         {
-            delete* it;
-            it = listBall.erase(it);
+            delete* itBall;
+            itBall = listBall.erase(itBall);
         }
         else
         {
-            ++it;
+            ++itBall;
         }
     }
+
+    //if (listTiles.empty())
+    //    oWindow->close();
 }
 
 void Game::display()
@@ -95,7 +106,6 @@ void Game::display()
     for (int i = 0; i < listBall.size(); i++)
     {
         oWindow->draw(*listBall[i]->getShape());
-        oWindow->draw(*listBall[i]->getHitbox());
     }
     // Tiles
     for (int i = 0; i < listTiles.size(); i++)

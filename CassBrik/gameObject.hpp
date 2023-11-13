@@ -12,12 +12,14 @@ public:
 	virtual bool update(sf::Time deltaTime, sf::RenderWindow* window) { return 0; };
 	inline sf::Shape* getShape() { return shape; };
 	inline sf::Shape* getHitbox() { return hitbox; };
+	inline int getDamage() { return damage; };
 
 	void move(sf::Time deltaTime);
 	sf::Vector2f getMinMaxX();
 	sf::Vector2f getMinMaxY();
 
-	void checkBounce(GameObject* incomingObject, sf::RenderWindow* window);
+	virtual void checkBounce(GameObject* incomingObject) { return; };
+	virtual void onCollision(GameObject* incomingObject) { return; }
 
 
 protected:
@@ -28,15 +30,11 @@ protected:
 
 	float velocity = 0;
 
+	float damage = 1;
+
 	sf::Shape* shape;
 	sf::Shape* hitbox;
 
 	float getVectorLenth(sf::Vector2f vector);
-	sf::Vector2f getWindowBorderBounceDirection(sf::RenderWindow* window);
-	bool isOutScreen(sf::RenderWindow* window);
-	bool isColliding(GameObject* object);
-	bool isCollidingOneD(sf::Vector2f object1, sf::Vector2f object2);
-	sf::Vector2f getBounceDirection(GameObject* incomingObject);
-	void bounce(sf::Vector2f direction);
 
 };

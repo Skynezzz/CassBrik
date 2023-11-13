@@ -7,7 +7,7 @@ class Tiles : public GameObject
 public:
 	Tiles(float posX, float posY, int pLife);
 	bool update(sf::Time deltaTime, sf::RenderWindow* window) override;
-	inline void getDamage() { life--; }
+	inline void onCollision(GameObject* incomingObject) override { life -= incomingObject->getDamage(); }
 
 private:
 	int life;
