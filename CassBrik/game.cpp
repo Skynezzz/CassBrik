@@ -68,6 +68,14 @@ void Game::update()
         {
             (*itBall)->checkBounce(*itTile);
 
+            for (auto itBallColision = listBall.begin(); itBallColision != listBall.end(); ++itBallColision)
+            {
+                if (itBall == itBallColision)
+                    continue;
+
+                (*itBall)->checkBounce(*itBallColision);
+            }
+
     //--- TILES ---//
             if ((*itTile)->update(deltaTime, oWindow) == 1)
             {
@@ -79,6 +87,7 @@ void Game::update()
                 ++itTile;
             }
         }
+
 
     //--- BALLS ---//
         if ((*itBall)->update(deltaTime, oWindow) == 1)

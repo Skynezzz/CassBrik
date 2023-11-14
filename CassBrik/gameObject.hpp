@@ -18,7 +18,7 @@ public:
 	sf::Vector2f getMinMaxX();
 	sf::Vector2f getMinMaxY();
 
-	virtual void checkBounce(GameObject* incomingObject) { return; };
+	virtual void checkBounce (GameObject* incomingObject) { return; };
 	virtual void onCollision(GameObject* incomingObject) { return; }
 
 
