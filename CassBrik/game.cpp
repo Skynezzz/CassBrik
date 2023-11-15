@@ -64,17 +64,18 @@ void Game::update()
     
     for (auto itBall = listBall.begin(); itBall != listBall.end();)
     {
+    //--- BALLS Collision ---//
+        for (auto itBallColision = listBall.begin(); itBallColision != listBall.end(); ++itBallColision)
+        {
+            if (itBall == itBallColision)
+                continue;
+
+            (*itBall)->checkBounce(*itBallColision);
+        }
+
         for (auto itTile = listTiles.begin(); itTile != listTiles.end();)
         {
             (*itBall)->checkBounce(*itTile);
-
-            for (auto itBallColision = listBall.begin(); itBallColision != listBall.end(); ++itBallColision)
-            {
-                if (itBall == itBallColision)
-                    continue;
-
-                (*itBall)->checkBounce(*itBallColision);
-            }
 
     //--- TILES ---//
             if ((*itTile)->update(deltaTime, oWindow) == 1)

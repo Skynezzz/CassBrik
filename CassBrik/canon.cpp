@@ -17,7 +17,8 @@ bool Canon::update(sf::Time deltaTime, sf::RenderWindow* window)
 	float angle = -atan(opp / adj) * 180 / 3.14;
 
 	shape->setRotation(angle);
-	initAngle = angle;
+
+	sprite = TextureManager::getSprite("img/canon.png");
 
 	return false;
 }

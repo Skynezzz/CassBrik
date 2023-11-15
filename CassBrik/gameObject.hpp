@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "TextureManager.hpp"
 
 class GameObject
 {
@@ -10,7 +11,7 @@ public:
 	GameObject(float pPos1, float pPos2, int pSize1);
 
 	virtual bool update(sf::Time deltaTime, sf::RenderWindow* window) { return 0; };
-	inline sf::Shape* getShape() { return shape; };
+	inline sf::Drawable* getShape() { if (sprite) { return sprite; } return shape; };
 	inline sf::Shape* getHitbox() { return hitbox; };
 	inline int getDamage() { return damage; };
 
@@ -34,6 +35,7 @@ protected:
 
 	sf::Shape* shape;
 	sf::Shape* hitbox;
+	sf::Sprite* sprite;
 
 	float getVectorLenth(sf::Vector2f vector);
 
