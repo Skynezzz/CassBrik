@@ -7,6 +7,7 @@ class GameObject
 {
 public:
 
+	GameObject(float pPos1, float pPos2, int pSize1, int pSize2, const char* path);
 	GameObject(float pPos1, float pPos2, int pSize1, int pSize2);
 	GameObject(float pPos1, float pPos2, int pSize1);
 

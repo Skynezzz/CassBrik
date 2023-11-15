@@ -136,6 +136,7 @@
     <ClCompile Include="gameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="tiles.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +145,7 @@
     <ClInclude Include="game.hpp" />
     <ClInclude Include="gameObject.hpp" />
     <ClInclude Include="test.hpp" />
+    <ClInclude Include="TextureManager.hpp" />
     <ClInclude Include="tiles.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

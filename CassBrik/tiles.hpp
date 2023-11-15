@@ -10,6 +10,7 @@ public:
 	inline void onCollision(GameObject* incomingObject) override { life -= incomingObject->getDamage(); }
 
 private:
+	int maxLife;
 	int life;
 
 };

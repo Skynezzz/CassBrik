@@ -12,13 +12,10 @@ bool Canon::update(sf::Time deltaTime, sf::RenderWindow* window)
 	float opp = mouse.x - baseCanon.x;
 	float adj = mouse.y - baseCanon.y;
 
-	//std::cout << atan2(opp, adj) * 180 / 3.14 << std::endl;
-
 	float angle = -atan(opp / adj) * 180 / 3.14;
 
 	shape->setRotation(angle);
-
-	sprite = TextureManager::getSprite("img/canon.png");
+	sprite->setRotation(angle);
 
 	return false;
 }

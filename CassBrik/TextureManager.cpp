@@ -1,38 +1,38 @@
 #include "TextureManager.hpp"
 
-sf::Sprite* TextureManager::getSprite(std::string path)
-{
-    if (checkSprite(path))
-        loadNewSprite(path);
 
-    //return findSprite(path);
-    return sf::Sprite*;
+std::map<std::string, sf::Texture*> TextureManager::textures;
+
+sf::Texture* TextureManager::getTexture(std::string path)
+{
+    if (!checkTexture(path))
+        loadNewTexture(path);
+
+    return findTexture(path);
 }
 
-bool TextureManager::checkSprite(std::string path)
+bool TextureManager::checkTexture(std::string path)
 {
-    return sprites[path];
+    return TextureManager::textures[path];
 }
 
-int loadNewSprite(std::string path)
+int TextureManager::loadNewTexture(std::string path)
 {
-    sf::Texture texture;
-    if (!texture.loadFromFile(path))
+    sf::Texture* texture = new sf::Texture;
+    if (!texture->loadFromFile(path))
     {
         return 1;
     }
 
-    sf::Sprite sprite(texture);
-
-    sprites[path] = sprite;
+    TextureManager::textures[path] = texture;
 
     return 0;
 }
 
-static sf::Sprite* TextureManager::findSprite(std::string path)
+sf::Texture* TextureManager::findTexture(std::string path)
 {
-    if (sprites[path])
-        return sprites[path];
+    if (TextureManager::textures[path] != nullptr)
+        return TextureManager::textures[path];
 
     return nullptr;
 }

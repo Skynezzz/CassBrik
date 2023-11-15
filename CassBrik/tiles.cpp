@@ -1,7 +1,9 @@
 #include "tiles.hpp"
+#include <iostream>
 
-Tiles::Tiles(float posX, float posY, int pLife) : GameObject(40*posX, 20*posY, 40, 20)
+Tiles::Tiles(float posX, float posY, int pLife) : GameObject(64*posX + 32, 25*posY + 12, 60, 20)
 {
+	maxLife = pLife;
 	life = pLife;
 }
 
@@ -10,22 +12,30 @@ bool Tiles::update(sf::Time deltaTime, sf::RenderWindow* window)
 	if (life <= 0)
 		return true;
 
-	switch (life)
+	float colorLife = life * 100 / maxLife;  
+
+	if (life == maxLife)
+		return false;
+
+	if (colorLife > 75)
 	{
-	case 4:
 		shape->setFillColor(sf::Color::Blue);
-		break;
-	case 3:
+		return false;
+	}
+	if (colorLife > 50)
+	{
 		shape->setFillColor(sf::Color::Green);
-		break;
-	case 2:
+		return false;
+	}
+	if (colorLife > 25)
+	{
 		shape->setFillColor(sf::Color::Yellow);
-		break;
-	case 1:
+		return false;
+	}
+	if (colorLife > 0)
+	{
 		shape->setFillColor(sf::Color::Red);
-		break;
-	default:
-		break;
+		return false;
 	}
 
 	return false;

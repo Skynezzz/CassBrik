@@ -4,14 +4,16 @@ Game::Game()
 {
     oWindow = new sf::RenderWindow(sf::VideoMode(640, 480), "Le Kas Brik");
 
-    listTiles.push_back(new Tiles(1, 3, 5));
-    listTiles.push_back(new Tiles(2, 3, 5));
-    listTiles.push_back(new Tiles(3, 3, 5));
-    listTiles.push_back(new Tiles(4, 3, 5));
-    listTiles.push_back(new Tiles(5, 3, 5));
-    listTiles.push_back(new Tiles(6, 3, 5));
-    listTiles.push_back(new Tiles(7, 3, 5));
-    listTiles.push_back(new Tiles(8, 3, 100));
+    listTiles.push_back(new Tiles(0, 0, 5));
+    listTiles.push_back(new Tiles(1, 0, 5));
+    listTiles.push_back(new Tiles(2, 0, 5));
+    listTiles.push_back(new Tiles(3, 0, 5));
+    listTiles.push_back(new Tiles(4, 0, 5));
+    listTiles.push_back(new Tiles(5, 0, 5));
+    listTiles.push_back(new Tiles(6, 0, 5));
+    listTiles.push_back(new Tiles(7, 0, 5));
+    listTiles.push_back(new Tiles(8, 0, 5));
+    listTiles.push_back(new Tiles(9, 0, 5));
 }
 
 Game::~Game()
@@ -135,5 +137,15 @@ void Game::frameLimiter()
     if (timeElapsed < timePerFrame)
     {
         sf::sleep(timePerFrame - timeElapsed);
+    }
+}
+
+void Game::setLevel(int level)
+{
+    std::ofstream levelTxt("/level/" + level);
+    std::string row;
+
+    while (std::getline(levelTxt, row)) //Tant qu'on n'est pas à la fin, on lit
+    {
     }
 }

@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <fstream>
 #include <vector>
 
 #include "canon.hpp"
@@ -35,5 +36,7 @@ private:
     void update();
     void display();
     void frameLimiter();
+
+    void setLevel(int level);
 
 };

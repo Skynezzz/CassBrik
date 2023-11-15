@@ -4,7 +4,6 @@
 int main(int argc, char** argv)
 {
     Game game;
-    TextureManager textureManager;
 
     game.start();
 

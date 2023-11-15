@@ -1,6 +1,28 @@
 #include "gameObject.hpp"
 #include <iostream>
 
+GameObject::GameObject(float pPos1, float pPos2, int pSize1, int pSize2, const char* path)
+{
+
+	position.x = pPos1;
+	position.y = pPos2;
+	size.x = pSize1;
+	size.y = pSize2;
+
+	shape = new sf::RectangleShape(sf::Vector2f(size.x, size.y));
+	shape->setOrigin(pSize1/2, pSize2/2);
+	shape->setPosition(position.x, position.y);
+	shape->setFillColor(sf::Color::White);
+
+	sf::Vector2f sizeSprite;
+	sprite = new sf::Sprite(*TextureManager::getTexture(path));
+	sizeSprite.x = (size.x / 225);
+	sizeSprite.y = (size.y / 225);
+	sprite->setScale(sizeSprite);
+	sprite->setOrigin(pSize1 / 2, pSize2 / 2);
+	sprite->setPosition(position.x, position.y);
+}
+
 GameObject::GameObject(float pPos1, float pPos2, int pSize1, int pSize2)
 {
 
