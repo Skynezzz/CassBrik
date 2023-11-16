@@ -12,7 +12,7 @@
 class Game
 {
 public:
-	Game();
+	Game(int level);
 	~Game();
 
     void start();

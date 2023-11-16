@@ -20,21 +20,21 @@ public:
 	sf::Vector2f getMinMaxX();
 	sf::Vector2f getMinMaxY();
 
-	virtual void checkBounce (GameObject* incomingObject) { return; };
+	virtual void checkBounce(GameObject* incomingObject) { return; };
 	virtual void onCollision(GameObject* incomingObject) { return; }
 
+	sf::Shape* shape;
+	sf::Vector2f size;
 
 protected:
 
 	sf::Vector2f position;
 	sf::Vector2f vect;
-	sf::Vector2f size;
 
 	float velocity = 0;
 
 	float damage = 1;
 
-	sf::Shape* shape;
 	sf::Shape* hitbox;
 	sf::Sprite* sprite;
 

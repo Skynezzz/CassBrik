@@ -15,6 +15,7 @@ Ball::Ball(sf::RenderWindow* window) : GameObject(320.f, 480.f, 20)
 bool Ball::update(sf::Time deltaTime, sf::RenderWindow* window)
 {
 	move(deltaTime);
+	//oSetPosition(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y);
 
 	borderProtection(window);
 
@@ -25,48 +26,6 @@ bool Ball::isUnderScreen(sf::RenderWindow* window)
 {
 	return getMinMaxY().x > window->getSize().y;
 }
-
-//void Ball::move(sf::Time deltaTime, sf::RenderWindow* window)
-//{
-//	sf::Vector2f nextPosition;
-//	nextPosition.x = position.x + vect.x * velocity * deltaTime.asSeconds();
-//	nextPosition.y = position.y + vect.y * velocity * deltaTime.asSeconds();
-//
-//	sf::Vector2f add;
-//	add.x = vect.x * velocity * deltaTime.asSeconds();
-//	add.y = vect.y * velocity * deltaTime.asSeconds();
-//
-//	if (nextPosition.x - size.x < 0) {
-//		add.x = -add.x;
-//		float xOut = position.x - size.x;
-//		position.x = size.x + add.x - 2 * xOut;
-//		vect.x = -vect.x;
-//		std::cout << vect.x << std::endl;
-//	}
-//	else if (nextPosition.x + size.x > window->getSize().x) {
-//		add.x = -add.x;
-//		float xOut = window->getSize().x - (position.x + size.x);
-//		position.x = window->getSize().x - size.x + (add.x + 2 * xOut);
-//		vect.x = -vect.x;
-//	}
-//	else {
-//		position.x = nextPosition.x;
-//	}
-//
-//	if (nextPosition.y - size.y < 0) {
-//		add.y = -add.y;
-//		float yOut = position.y - size.y;
-//		position.y = size.y + add.y - 2 * yOut;
-//		vect.y = -vect.y;
-//	}
-//	else {
-//		position.y = nextPosition.y;
-//	}
-//
-//	shape->setPosition(position.x, position.y);
-//
-//	hitbox->setPosition(position.x, position.y);
-//}
 
 void Ball::oSetPosition(float x, float y)
 {
@@ -157,7 +116,33 @@ bool Ball::isColliding(GameObject* incomingObject)
 
 	bool collideY = isCollidingOneD(incomingObject->getMinMaxY(), getMinMaxY());
 
-	return (collideX and collideY);
+	if (!collideX or !collideY)
+		return false;
+
+	sf::Vector2f minmaxX = incomingObject->getMinMaxX();
+	sf::Vector2f minmaxY = incomingObject->getMinMaxY();
+
+	collideX = isCollidingOnePos(shape->getPosition().x, minmaxX);
+
+	collideY = isCollidingOnePos(shape->getPosition().y, minmaxY);
+
+	if (collideX and collideY)
+		return true;
+
+	sf::Vector2f dist;
+
+	dist.x = abs(incomingObject->shape->getPosition().x - shape->getPosition().x);
+	dist.y = abs(incomingObject->shape->getPosition().y -shape->getPosition().y);
+
+	sf::Vector2f objectSize;
+
+	objectSize.x = incomingObject->size.x / 2;
+	objectSize.y = incomingObject->size.y / 2;
+
+	if (getVectorLenth(dist) <= size.x / 2 + getVectorLenth(objectSize))
+		return true;
+
+	return false;
 }
 
 bool Ball::isCollidingOneD(sf::Vector2f objectOne, sf::Vector2f objectTwo)
@@ -165,7 +150,14 @@ bool Ball::isCollidingOneD(sf::Vector2f objectOne, sf::Vector2f objectTwo)
 	if (objectOne.y - objectOne.x > objectTwo.y - objectTwo.x)
 		return isCollidingOneD(objectTwo, objectOne);
 
+
+
 	return ((objectOne.x >= objectTwo.x and objectOne.x <= objectTwo.y) or (objectOne.y >= objectTwo.x and objectOne.y <= objectTwo.y));
+}
+
+bool Ball::isCollidingOnePos(float objectOne, sf::Vector2f objectTwo)
+{
+	return (objectOne >= objectTwo.x and objectOne <= objectTwo.y);
 }
 
 

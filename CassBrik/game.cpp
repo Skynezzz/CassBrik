@@ -1,19 +1,10 @@
 #include "game.hpp"
 
-Game::Game()
+Game::Game(int level)
 {
     oWindow = new sf::RenderWindow(sf::VideoMode(640, 480), "Le Kas Brik");
 
-    listTiles.push_back(new Tiles(0, 0, 5));
-    listTiles.push_back(new Tiles(1, 0, 5));
-    listTiles.push_back(new Tiles(2, 0, 5));
-    listTiles.push_back(new Tiles(3, 0, 5));
-    listTiles.push_back(new Tiles(4, 0, 5));
-    listTiles.push_back(new Tiles(5, 0, 5));
-    listTiles.push_back(new Tiles(6, 0, 5));
-    listTiles.push_back(new Tiles(7, 0, 5));
-    listTiles.push_back(new Tiles(8, 0, 5));
-    listTiles.push_back(new Tiles(9, 0, 5));
+    setLevel(level);
 }
 
 Game::~Game()
@@ -47,7 +38,8 @@ void Game::event()
 
         //--- MOUSE CLICK ---//
         case 9:
-            listBall.push_back(new Ball(oWindow));
+            if (listBall.size() < 15)
+                listBall.push_back(new Ball(oWindow));
             break;
 
         default:
@@ -63,7 +55,7 @@ void Game::update()
     //--- CANON ---//
     canon.update(deltaTime, oWindow);
 
-    
+
     for (auto itBall = listBall.begin(); itBall != listBall.end();)
     {
     //--- BALLS Collision ---//
@@ -142,10 +134,21 @@ void Game::frameLimiter()
 
 void Game::setLevel(int level)
 {
-    std::ofstream levelTxt("/level/" + level);
-    std::string row;
+    std::string path = "level/" + std::to_string(level) + ".txt";
 
-    while (std::getline(levelTxt, row)) //Tant qu'on n'est pas à la fin, on lit
+    std::ifstream levelTxt(path);
+    std::string row;
+    int i = 0;
+
+    while (std::getline(levelTxt, row))
     {
+        for (int j = 0; j < 10; j++)
+        {
+            if (row[j] != '0')
+            {
+                listTiles.push_back(new Tiles(j, i, row[j] - 48));
+            }
+        }
+        i++;
     }
 }
