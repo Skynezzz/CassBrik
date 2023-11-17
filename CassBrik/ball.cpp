@@ -14,8 +14,8 @@ Ball::Ball(sf::RenderWindow* window) : GameObject(320.f, 480.f, 20, "image/ball.
 
 bool Ball::update(sf::Time deltaTime, sf::RenderWindow* window)
 {
-	move(deltaTime);
-	//oSetPosition(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y);
+	//move(deltaTime);
+	oSetPosition(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y);
 
 	borderProtection(window);
 

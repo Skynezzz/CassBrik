@@ -67,8 +67,10 @@ GameObject::GameObject(float pPos1, float pPos2, int pSize1, const char* path)
 
 void GameObject::move(sf::Time deltaTime)
 {
-	position.x += vect.x * velocity * deltaTime.asSeconds();
-	position.y += vect.y * velocity * deltaTime.asSeconds();
+	float fDt = deltaTime.asSeconds();
+
+	position.x += vect.x * velocity * fDt;
+	position.y += vect.y * velocity * fDt;
 
 	shape->setPosition(position.x, position.y);
 	hitbox->setPosition(position.x, position.y);
