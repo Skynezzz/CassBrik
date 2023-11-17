@@ -12,14 +12,16 @@
 class Game
 {
 public:
-	Game(int level);
+	Game();
 	~Game();
 
-    void start();
+    void start(int level);
 
 private:
 
     sf::RenderWindow* oWindow;
+
+    bool running;
 
     const int FPS = 165;
     const sf::Time timePerFrame = sf::seconds(1.0f / FPS);

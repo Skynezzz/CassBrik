@@ -1,7 +1,7 @@
 #include "ball.hpp"
 #include <iostream>
 
-Ball::Ball(sf::RenderWindow* window) : GameObject(320.f, 480.f, 20)
+Ball::Ball(sf::RenderWindow* window) : GameObject(320.f, 480.f, 20, "image/ball.png")
 {
 	sf::Vector2f direction;
 	direction.x = sf::Mouse::getPosition(*window).x - shape->getPosition().x;

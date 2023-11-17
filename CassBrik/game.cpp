@@ -1,19 +1,21 @@
 #include "game.hpp"
 
-Game::Game(int level)
+Game::Game()
 {
     oWindow = new sf::RenderWindow(sf::VideoMode(640, 480), "Le Kas Brik");
 
-    setLevel(level);
 }
 
 Game::~Game()
 {
 }
 
-void Game::start()
+void Game::start(int level)
 {
-    while (oWindow->isOpen())
+    setLevel(level);
+    running = true;
+
+    while (running)
     {
         event();
 
@@ -38,7 +40,7 @@ void Game::event()
 
         //--- MOUSE CLICK ---//
         case 9:
-            if (listBall.size() < 15)
+            if (listBall.size() < 3)
                 listBall.push_back(new Ball(oWindow));
             break;
 
@@ -96,8 +98,16 @@ void Game::update()
         }
     }
 
-    //if (listTiles.empty())
-    //    oWindow->close();
+    if (listTiles.empty())
+    {
+        running = false;
+
+        for (auto itBall = listBall.begin(); itBall != listBall.end();)
+        {
+            delete* itBall;
+            itBall = listBall.erase(itBall);
+        }
+    }
 }
 
 void Game::display()
@@ -109,6 +119,7 @@ void Game::display()
     // Balls
     for (int i = 0; i < listBall.size(); i++)
     {
+        oWindow->draw(*listBall[i]->getHitbox());
         oWindow->draw(*listBall[i]->getShape());
     }
     // Tiles

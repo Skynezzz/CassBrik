@@ -5,7 +5,7 @@
 class Canon : public GameObject
 {
 public:
-	Canon() : GameObject(320.f, 480.f, 20, 40, "image/canon.png") { shape->setOrigin(10, 40); sprite->setOrigin(225/2, 225); };
+	Canon() : GameObject(320.f, 480.f, 60, 120, "image/canon.png") { shape->setOrigin(10, 40); sprite->setOrigin(225/2, 225); };
 	bool update(sf::Time deltaTime, sf::RenderWindow* window) override;
 
 private:

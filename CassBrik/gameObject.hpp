@@ -9,7 +9,7 @@ public:
 
 	GameObject(float pPos1, float pPos2, int pSize1, int pSize2, const char* path);
 	GameObject(float pPos1, float pPos2, int pSize1, int pSize2);
-	GameObject(float pPos1, float pPos2, int pSize1);
+	GameObject(float pPos1, float pPos2, int pSize1, const char* path);
 
 	virtual bool update(sf::Time deltaTime, sf::RenderWindow* window) { return 0; };
 	inline sf::Drawable* getShape() { if (sprite) { return sprite; } return shape; };

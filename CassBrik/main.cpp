@@ -3,9 +3,10 @@
 
 int main(int argc, char** argv)
 {
-    Game game(1);
+    Game game;
 
-    game.start();
+    game.start(1);
+    game.start(2);
 
     return 0;
 }

@@ -3,40 +3,45 @@
 
 Tiles::Tiles(float posX, float posY, int pLife) : GameObject(64*posX + 32, 25*posY + 12, 60, 20)
 {
-	maxLife = pLife;
 	life = pLife;
+    sf::Time deltaTime;
+    update(deltaTime, nullptr);
 }
 
 bool Tiles::update(sf::Time deltaTime, sf::RenderWindow* window)
 {
-	if (life <= 0)
-		return true;
+    switch (life)
+    {
+    case 6:
+        shape->setFillColor(sf::Color::Blue);
+        break;
+        
+    case 5:
+        shape->setFillColor(sf::Color::Cyan);
+        break;
+        
+    case 4:
+        shape->setFillColor(sf::Color::Green);
+        break;
+        
+    case 3:
+        shape->setFillColor(sf::Color::Green);
+        break;
+        
+    case 2:
+        shape->setFillColor(sf::Color(255, 127, 0, 255));
+        break;
+        
+    case 1:
+        shape->setFillColor(sf::Color::Red);
+        break;
+        
+    case 0:
+        return true;
 
-	float colorLife = life * 100 / maxLife;  
-
-	if (life == maxLife)
-		return false;
-
-	if (colorLife > 75)
-	{
-		shape->setFillColor(sf::Color::Blue);
-		return false;
-	}
-	if (colorLife > 50)
-	{
-		shape->setFillColor(sf::Color::Green);
-		return false;
-	}
-	if (colorLife > 25)
-	{
-		shape->setFillColor(sf::Color::Yellow);
-		return false;
-	}
-	if (colorLife > 0)
-	{
-		shape->setFillColor(sf::Color::Red);
-		return false;
-	}
+    default:
+        break;
+    }
 
 	return false;
 }
